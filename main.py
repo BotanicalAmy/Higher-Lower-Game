@@ -19,12 +19,16 @@ def higher_lower():
     
     while playing:
         #select two random items to compare from the data list
-        a_b_choices = random.sample(data, 2)
-        if len(a) == 0:
-            a = a_b_choices[0]
-        b = a_b_choices[1]
+        a = []
+        b = []
         #if you already have an a list available from playing, use that value
-        #print out the A list for comparison
+        if len(a) == 0:
+            a = random.choice(data)
+        b = random.choice(data)
+        #pick again if we accidentally ended up with the same data items
+        while a == b:
+            b = random.choice(data)
+            
         print(logo)
         print(f"Compare A: {get_details(a)}")
         print(vs)
@@ -45,10 +49,11 @@ def higher_lower():
         if selection == 'B':
             if b.get('follower_count') > a.get('follower_count'):
                 current_score += 1
+                b = a
                 print(f"You're right!, your current score is {current_score}")
             if b.get('follower_count') < a.get('follower_count'):
                 current_score -=1
                 print(f"Sorry, that's wrong.  Final score: {current_score}")
                 playing = False
-    
+
 higher_lower()
